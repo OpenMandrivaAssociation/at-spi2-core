@@ -1,5 +1,5 @@
 Name:           at-spi2-core
-Version:        0.1.5
+Version:        0.1.6
 Release:        %mkrel 1
 Summary:        Protocol definitions and daemon for D-Bus at-spi
 
@@ -48,9 +48,6 @@ rm -rf $RPM_BUILD_ROOT
 %files
 %defattr(-,root,root,-)
 %doc COPYING AUTHORS README
-%config(noreplace) %{_sysconfdir}/at-spi2/*.conf
-%config(noreplace) %{_sysconfdir}/xdg/autostart/*.desktop
-%{_bindir}/*
 %{_libexecdir}/at-spi2-registryd
 %{_datadir}/at-spi2
 %{_datadir}/dbus-1/services/org.freedesktop.atspi.Registry.service
