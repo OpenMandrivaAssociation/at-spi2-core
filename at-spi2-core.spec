@@ -1,5 +1,5 @@
 Name:           at-spi2-core
-Version:        0.3.6
+Version:        0.3.90
 Release:        %mkrel 1
 Summary:        Protocol definitions and daemon for D-Bus at-spi
 
