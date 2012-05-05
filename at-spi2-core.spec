@@ -7,7 +7,7 @@
 %define url_ver	%(echo %{version}|cut -d. -f1,2)
 
 Name:		at-spi2-core
-Version:	2.2.3
+Version:	2.5.1
 Release:	1
 Summary:	Protocol definitions and daemon for D-Bus at-spi
 Group:		System/Libraries
