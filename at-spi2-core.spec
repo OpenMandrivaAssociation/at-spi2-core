@@ -1,7 +1,7 @@
 %define major		0
-%define gir_major	2.0
+%define girmajor	2.0
 %define libname		%mklibname atspi %{major}
-%define girname		%mklibname atspi-gir %{gir_major}
+%define girname		%mklibname atspi-gir %{girmajor}
 %define develname 	%mklibname -d atspi
 
 %define url_ver	%(echo %{version}|cut -d. -f1,2)
@@ -46,7 +46,6 @@ This package contains libraries used by %{name}.
 %package -n %{girname}
 Summary:	GObject Introspection interface description for %{name}
 Group:		System/Libraries
-Requires:	%{libname} = %{version}-%{release}
 
 %description -n %{girname}
 GObject Introspection interface description for %{name}.
@@ -55,6 +54,7 @@ GObject Introspection interface description for %{name}.
 Summary:	Libraries and include files with %{name}
 Group:		Development/GNOME and GTK+
 Requires:	%{libname} = %{version}
+Requires:	%{girname} = %{version}
 Provides:	%{name}-devel = %{version}-%{release}
 
 %description -n %{develname}
@@ -76,7 +76,6 @@ find %{buildroot} -name *.la | xargs rm
 
 %find_lang %{name}
 
-
 %files -f %{name}.lang
 %doc COPYING AUTHORS README
 %dir %_sysconfdir/at-spi2/
@@ -90,12 +89,12 @@ find %{buildroot} -name *.la | xargs rm
 %{_libdir}/libatspi.so.%{major}*
 
 %files -n %{girname}
-%{_libdir}/girepository-1.0/Atspi-%{gir_major}.typelib
+%{_libdir}/girepository-1.0/Atspi-%{girmajor}.typelib
 
 %files -n %{develname}
 %doc %{_datadir}/gtk-doc/html/libatspi
 %{_libdir}/*.so
 %{_libdir}/pkgconfig/*.pc
 %{_includedir}/*
-%{_datadir}/gir-1.0/Atspi-%{gir_major}.gir
+%{_datadir}/gir-1.0/Atspi-%{girmajor}.gir
 
