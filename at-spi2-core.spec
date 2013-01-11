@@ -9,7 +9,7 @@
 Summary:	Protocol definitions and daemon for D-Bus at-spi
 Name:		at-spi2-core
 Version:	2.6.3
-Release:	1
+Release:	2
 Group:		System/Libraries
 License:	LGPLv2+
 URL:		http://www.linuxfoundation.org/en/AT-SPI_on_D-Bus
