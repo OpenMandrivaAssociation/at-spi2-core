@@ -1,9 +1,9 @@
 %define url_ver	%(echo %{version}|cut -d. -f1,2)
 
 %define major	0
-%define gimajor	2.0
+%define api	2.0
 %define libname	%mklibname atspi %{major}
-%define girname	%mklibname atspi-gir %{gimajor}
+%define girname	%mklibname atspi-gir %{api}
 %define devname	%mklibname -d atspi
 
 Summary:	Protocol definitions and daemon for D-Bus at-spi
@@ -12,7 +12,7 @@ Version:	2.6.3
 Release:	2
 Group:		System/Libraries
 License:	LGPLv2+
-URL:		http://www.linuxfoundation.org/en/AT-SPI_on_D-Bus
+Url:		http://www.linuxfoundation.org/en/AT-SPI_on_D-Bus
 Source0:	http://ftp.gnome.org/pub/GNOME/sources/at-spi2-core/%{url_ver}/%{name}-%{version}.tar.xz
 
 BuildRequires:	intltool
@@ -23,7 +23,6 @@ BuildRequires:	pkgconfig(x11)
 BuildRequires:	pkgconfig(xi)
 BuildRequires:	pkgconfig(xtst)
 BuildRequires:	pkgconfig(xevie)
-
 Requires:	dbus
 
 %description
@@ -72,7 +71,6 @@ files to allow you to develop with %{name}.
 
 %install
 %makeinstall_std
-find %{buildroot} -name *.la | xargs rm
 
 %find_lang %{name}
 
@@ -89,12 +87,12 @@ find %{buildroot} -name *.la | xargs rm
 %{_libdir}/libatspi.so.%{major}*
 
 %files -n %{girname}
-%{_libdir}/girepository-1.0/Atspi-%{gimajor}.typelib
+%{_libdir}/girepository-1.0/Atspi-%{api}.typelib
 
 %files -n %{devname}
 %doc %{_datadir}/gtk-doc/html/libatspi
 %{_libdir}/*.so
 %{_libdir}/pkgconfig/*.pc
 %{_includedir}/*
-%{_datadir}/gir-1.0/Atspi-%{gimajor}.gir
+%{_datadir}/gir-1.0/Atspi-%{api}.gir
 
