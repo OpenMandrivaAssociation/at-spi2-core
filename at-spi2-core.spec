@@ -5,11 +5,12 @@
 %define libname	%mklibname atspi %{major}
 %define girname	%mklibname atspi-gir %{api}
 %define devname	%mklibname -d atspi
+%bcond_with	bootstrap
 
 Summary:	Protocol definitions and daemon for D-Bus at-spi
 Name:		at-spi2-core
 Version:	2.8.0
-Release:	1
+Release:	2
 Group:		System/Libraries
 License:	LGPLv2+
 Url:		http://www.linuxfoundation.org/en/AT-SPI_on_D-Bus
@@ -42,18 +43,22 @@ Group:		System/Libraries
 %description -n %{libname}
 This package contains libraries used by %{name}.
 
+%if !%{with bootstrap}
 %package -n %{girname}
 Summary:	GObject Introspection interface description for %{name}
 Group:		System/Libraries
 
 %description -n %{girname}
 GObject Introspection interface description for %{name}.
+%endif
 
 %package -n %{devname}
 Summary:	Libraries and include files with %{name}
 Group:		Development/GNOME and GTK+
 Requires:	%{libname} = %{version}-%{release}
+%if !%{with bootstrap}
 Requires:	%{girname} = %{version}-%{release}
+%endif
 Provides:	%{name}-devel = %{version}-%{release}
 
 %description -n %{devname}
@@ -64,8 +69,21 @@ files to allow you to develop with %{name}.
 %setup -q
 
 %build
+%if %{with bootstrap}
+export ac_cv_alignof_char=1
+export ac_cv_alignof_dbind_pointer=4
+export ac_cv_alignof_dbind_struct=1
+export ac_cv_alignof_dbus_bool_t=4
+export ac_cv_alignof_dbus_int16_t=2
+export ac_cv_alignof_dbus_int32_t=4
+export ac_cv_alignof_dbus_int64_t=4
+export ac_cv_alignof_double=4
+%endif
 %configure2_5x \
-	--disable-static
+	--disable-static \
+%if %{with bootstrap}
+	--enable-introspection=no
+%endif
 
 %make LIBS='-lgmodule-2.0'
 
@@ -86,13 +104,16 @@ files to allow you to develop with %{name}.
 %files -n %{libname}
 %{_libdir}/libatspi.so.%{major}*
 
+%if !%{with bootstrap}
 %files -n %{girname}
 %{_libdir}/girepository-1.0/Atspi-%{api}.typelib
+%endif
 
 %files -n %{devname}
 %doc %{_datadir}/gtk-doc/html/libatspi
 %{_libdir}/*.so
 %{_libdir}/pkgconfig/*.pc
 %{_includedir}/*
+%if !%{with bootstrap}
 %{_datadir}/gir-1.0/Atspi-%{api}.gir
-
+%endif
