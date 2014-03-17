@@ -1,6 +1,7 @@
 removed_sources:
+  at-spi2-core-2.10.2.tar.xz: 5a9edce2542d352cdcc4b402c1f8e28330e56c9b
   at-spi2-core-2.6.3.tar.xz: 473e149b24bee3bbdf3ff3bf828461b19c2f5058
   at-spi2-core-2.8.0.tar.xz: 323b9b2332d50ceea999d33c10eb2fedc26b4c40
   at-spi2-core-2.9.92.tar.xz: 62971feadd7dc48b69d74183f60c4062e1c5344c
 sources:
-  at-spi2-core-2.10.2.tar.xz: 5a9edce2542d352cdcc4b402c1f8e28330e56c9b
+  at-spi2-core-2.11.91.tar.xz: 6588d058503ccb93d348ad426ae5f4f8ca158c36
