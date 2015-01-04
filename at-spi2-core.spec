@@ -10,7 +10,7 @@
 Summary:	Protocol definitions and daemon for D-Bus at-spi
 Name:		at-spi2-core
 Version:	2.8.0
-Release:	4
+Release:	5
 Epoch:		1
 Group:		System/Libraries
 License:	LGPLv2+
@@ -56,9 +56,9 @@ GObject Introspection interface description for %{name}.
 %package -n %{devname}
 Summary:	Libraries and include files with %{name}
 Group:		Development/GNOME and GTK+
-Requires:	%{libname} = %{version}-%{release}
+Requires:	%{libname} = %{EVRD}
 %if !%{with bootstrap}
-Requires:	%{girname} = %{version}-%{release}
+Requires:	%{girname} = %{EVRD}
 %endif
 Provides:	%{name}-devel = %{version}-%{release}
 
