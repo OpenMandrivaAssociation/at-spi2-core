@@ -100,6 +100,7 @@ export ac_cv_alignof_double=4
 %{_libexecdir}/at-spi2-registryd
 %{_libexecdir}/at-spi-bus-launcher
 %{_datadir}/dbus-1/services/org.*.service
+%{_datadir}/dbus-1/accessibility-services/org.*.service
 
 %files -n %{libname}
 %{_libdir}/libatspi.so.%{major}*
