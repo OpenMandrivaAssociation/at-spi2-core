@@ -1,0 +1,11 @@
+--- at-spi2-core-2.24.1/bus/Makefile.am.omv~	2017-06-30 16:10:21.459930807 +0200
++++ at-spi2-core-2.24.1/bus/Makefile.am	2017-06-30 16:10:28.293771662 +0200
+@@ -26,7 +26,7 @@ dbusservice_DATA = org.a11y.Bus.service
+ org.a11y.Bus.service: org.a11y.Bus.service.in
+ 	sed -e $(substitutions) $< > $@.tmp && mv $@.tmp $@
+ 
+-systemd_userdir = $(prefix)/lib/systemd/user
++systemd_userdir = /lib/systemd/user
+ systemd_user_DATA = at-spi-dbus-bus.service
+ at-spi-dbus-bus.service: at-spi-dbus-bus.service.in Makefile
+ 	sed -e $(substitutions) $< > $@.tmp && mv $@.tmp $@

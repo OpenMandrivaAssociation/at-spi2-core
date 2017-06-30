@@ -9,13 +9,14 @@
 
 Summary:	Protocol definitions and daemon for D-Bus at-spi
 Name:		at-spi2-core
-Version:	2.18.3
+Version:	2.24.1
 Release:	1
 Epoch:		1
 Group:		System/Libraries
 License:	LGPLv2+
 Url:		http://www.linuxfoundation.org/en/AT-SPI_on_D-Bus
 Source0:	http://ftp.acc.umu.se/pub/GNOME/sources/at-spi2-core/%{url_ver}/%{name}-%{version}.tar.xz
+Patch0:		at-spi2-systemd-userdir.patch
 
 BuildRequires:	intltool
 BuildRequires:	pkgconfig(dbus-1)
@@ -68,6 +69,7 @@ files to allow you to develop with %{name}.
 
 %prep
 %setup -q
+%apply_patches
 
 %build
 %if %{with bootstrap}
@@ -94,13 +96,13 @@ export ac_cv_alignof_double=4
 
 %files -f %{name}.lang
 %doc COPYING AUTHORS README
-%dir %{_sysconfdir}/at-spi2/
-%config(noreplace) %{_sysconfdir}/at-spi2/accessibility.conf
+/lib/systemd/user/at-spi-dbus-bus.service
 %{_sysconfdir}/xdg/autostart/at-spi-dbus-bus.desktop
 %{_libexecdir}/at-spi2-registryd
 %{_libexecdir}/at-spi-bus-launcher
 %{_datadir}/dbus-1/services/org.*.service
 %{_datadir}/dbus-1/accessibility-services/org.*.service
+%{_datadir}/defaults/at-spi2
 
 %files -n %{libname}
 %{_libdir}/libatspi.so.%{major}*
