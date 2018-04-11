@@ -9,14 +9,13 @@
 
 Summary:	Protocol definitions and daemon for D-Bus at-spi
 Name:		at-spi2-core
-Version:	2.26.2
+Version:	2.28.0
 Release:	1
 Epoch:		1
 Group:		System/Libraries
 License:	LGPLv2+
 Url:		http://www.linuxfoundation.org/en/AT-SPI_on_D-Bus
 Source0:	http://ftp.gnome.org/pub/GNOME/sources/at-spi2-core/%{url_ver}/%{name}-%{version}.tar.xz
-Patch0:		at-spi2-systemd-userdir.patch
 
 BuildRequires:	intltool
 BuildRequires:	pkgconfig(dbus-1)
@@ -27,6 +26,7 @@ BuildRequires:	pkgconfig(xi)
 BuildRequires:	pkgconfig(xtst)
 BuildRequires:	pkgconfig(xevie)
 Requires:	dbus
+BuildRequires:	meson ninja
 
 %description
 at-spi allows assistive technologies to access GTK-based
@@ -68,29 +68,20 @@ This package provides the necessary development libraries and include
 files to allow you to develop with %{name}.
 
 %prep
-%setup -q
-%apply_patches
+%autosetup -p1
+%meson \
+%if %{with bootstrap}
+	-Denable-introspection=no \
+%else
+	-Denable_docs=true \
+%endif
+	-Dsystemd_user_dir=/lib/systemd/user
 
 %build
-%if %{with bootstrap}
-export ac_cv_alignof_char=1
-export ac_cv_alignof_dbind_pointer=4
-export ac_cv_alignof_dbind_struct=1
-export ac_cv_alignof_dbus_bool_t=4
-export ac_cv_alignof_dbus_int16_t=2
-export ac_cv_alignof_dbus_int32_t=4
-export ac_cv_alignof_dbus_int64_t=4
-export ac_cv_alignof_double=4
-%endif
-%configure \
-%if %{with bootstrap}
-	--enable-introspection=no
-%endif
-
-%make LIBS='-lgmodule-2.0'
+%ninja -C build
 
 %install
-%makeinstall_std
+DESTDIR="%{buildroot}" %ninja install -C build
 
 %find_lang %{name}
 
