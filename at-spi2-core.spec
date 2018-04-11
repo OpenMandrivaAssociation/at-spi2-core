@@ -25,8 +25,9 @@ BuildRequires:	pkgconfig(x11)
 BuildRequires:	pkgconfig(xi)
 BuildRequires:	pkgconfig(xtst)
 BuildRequires:	pkgconfig(xevie)
-Requires:	dbus
 BuildRequires:	meson ninja
+BuildRequires:	gtk-doc
+Requires:	dbus
 
 %description
 at-spi allows assistive technologies to access GTK-based
