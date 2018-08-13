@@ -18,6 +18,7 @@ Url:		http://www.linuxfoundation.org/en/AT-SPI_on_D-Bus
 Source0:	http://ftp.gnome.org/pub/GNOME/sources/at-spi2-core/%{url_ver}/%{name}-%{version}.tar.xz
 
 BuildRequires:	intltool
+BuildRequires:	dbus
 BuildRequires:	pkgconfig(dbus-1)
 BuildRequires:	pkgconfig(glib-2.0)
 BuildRequires:	pkgconfig(gobject-introspection-1.0)
