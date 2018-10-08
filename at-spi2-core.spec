@@ -6,6 +6,7 @@
 %define girname	%mklibname atspi-gir %{api}
 %define devname	%mklibname -d atspi
 %bcond_with	bootstrap
+%bcond_with	gtkdoc
 
 Summary:	Protocol definitions and daemon for D-Bus at-spi
 Name:		at-spi2-core
@@ -27,7 +28,10 @@ BuildRequires:	pkgconfig(xi)
 BuildRequires:	pkgconfig(xtst)
 BuildRequires:	pkgconfig(xevie)
 BuildRequires:	meson ninja
+
+%if %{with gtkdoc}
 BuildRequires:	gtk-doc
+%endif
 Requires:	dbus
 
 %description
@@ -74,7 +78,8 @@ files to allow you to develop with %{name}.
 %meson \
 %if %{with bootstrap}
 	-Denable-introspection=no \
-%else
+%endif
+%if %{with gtkdoc}
 	-Denable_docs=true \
 %endif
 	-Dsystemd_user_dir=/lib/systemd/user
@@ -106,7 +111,9 @@ DESTDIR="%{buildroot}" %ninja install -C build
 %endif
 
 %files -n %{devname}
+%if %{with gtkdoc}
 %doc %{_datadir}/gtk-doc/html/libatspi
+%endif
 %{_libdir}/*.so
 %{_libdir}/pkgconfig/*.pc
 %{_includedir}/*
