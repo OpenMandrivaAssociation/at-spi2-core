@@ -11,7 +11,7 @@
 Summary:	Protocol definitions and daemon for D-Bus at-spi
 Name:		at-spi2-core
 Version:	2.30.0
-Release:	2
+Release:	3
 Epoch:		1
 Group:		System/Libraries
 License:	LGPLv2+
@@ -82,7 +82,7 @@ files to allow you to develop with %{name}.
 %if %{with gtkdoc}
 	-Denable_docs=true \
 %endif
-	-Dsystemd_user_dir=/lib/systemd/user
+	-Dsystemd_user_dir=%{_prefix}/lib/systemd/user
 
 %build
 %ninja -C build
@@ -94,7 +94,7 @@ DESTDIR="%{buildroot}" %ninja install -C build
 
 %files -f %{name}.lang
 %doc COPYING AUTHORS README
-/lib/systemd/user/at-spi-dbus-bus.service
+%{_prefix}/lib/systemd/user/at-spi-dbus-bus.service
 %{_sysconfdir}/xdg/autostart/at-spi-dbus-bus.desktop
 %{_libexecdir}/at-spi2-registryd
 %{_libexecdir}/at-spi-bus-launcher
@@ -120,5 +120,3 @@ DESTDIR="%{buildroot}" %ninja install -C build
 %if !%{with bootstrap}
 %{_datadir}/gir-1.0/Atspi-%{api}.gir
 %endif
-
-
