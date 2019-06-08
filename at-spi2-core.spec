@@ -11,7 +11,7 @@
 Summary:	Protocol definitions and daemon for D-Bus at-spi
 Name:		at-spi2-core
 Version:	2.32.1
-Release:	1
+Release:	2
 Epoch:		1
 Group:		System/Libraries
 License:	LGPLv2+
@@ -21,12 +21,16 @@ Source0:	http://ftp.gnome.org/pub/GNOME/sources/at-spi2-core/%{url_ver}/%{name}-
 BuildRequires:	intltool
 BuildRequires:	dbus
 BuildRequires:	pkgconfig(dbus-1)
+BuildRequires:	pkgconfig(gio-2.0)
 BuildRequires:	pkgconfig(glib-2.0)
+BuildRequires:	pkgconfig(gobject-2.0)
 BuildRequires:	pkgconfig(gobject-introspection-1.0)
 BuildRequires:	pkgconfig(x11)
 BuildRequires:	pkgconfig(xi)
 BuildRequires:	pkgconfig(xtst)
 BuildRequires:	pkgconfig(xevie)
+BuildRequires:	pkgconfig(systemd)
+BuildRequires:	pkgconfig(xkbcommon-x11)
 BuildRequires:	meson ninja
 
 %if %{with gtkdoc}
@@ -47,6 +51,7 @@ ORBIT / CORBA for its transport protocol.
 %package -n %{libname}
 Summary:	Libraries for %{name}
 Group:		System/Libraries
+Requires:	%name = %version
 
 %description -n %{libname}
 This package contains libraries used by %{name}.
@@ -55,6 +60,7 @@ This package contains libraries used by %{name}.
 %package -n %{girname}
 Summary:	GObject Introspection interface description for %{name}
 Group:		System/Libraries
+Requires:	%{libname} = %{EVRD}
 
 %description -n %{girname}
 GObject Introspection interface description for %{name}.
@@ -76,12 +82,14 @@ files to allow you to develop with %{name}.
 %prep
 %autosetup -p1
 %meson \
-%if %{with bootstrap}
-	-Denable-introspection=no \
-%endif
+#if %{with bootstrap}
+#	-Denable-introspection=no \
+#endif
 %if %{with gtkdoc}
 	-Denable_docs=true \
 %endif
+	-Dintrospection=yes
+	-Dx11=yes
 	-Dsystemd_user_dir=%{_prefix}/lib/systemd/user
 
 %build
