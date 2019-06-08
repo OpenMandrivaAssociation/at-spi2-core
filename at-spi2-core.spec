@@ -88,7 +88,7 @@ files to allow you to develop with %{name}.
 %if %{with gtkdoc}
 	-Denable_docs=true \
 %endif
-	-Dintrospection=yes \
+	-Denable-introspection=yes \
 	-Dx11=yes \
 	-Dsystemd_user_dir=%{_prefix}/lib/systemd/user
 
