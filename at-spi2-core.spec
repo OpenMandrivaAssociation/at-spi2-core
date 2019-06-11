@@ -51,7 +51,6 @@ ORBIT / CORBA for its transport protocol.
 %package -n %{libname}
 Summary:	Libraries for %{name}
 Group:		System/Libraries
-Requires:	%name = %version
 
 %description -n %{libname}
 This package contains libraries used by %{name}.
@@ -82,9 +81,10 @@ files to allow you to develop with %{name}.
 %prep
 %autosetup -p1
 %meson \
-#if %{with bootstrap}
-#	-Denable-introspection=no \
-#endif
+
+%if %{with bootstrap}#	-Denable-introspection=no \
+%endif
+
 %if %{with gtkdoc}
 	-Denable_docs=true \
 %endif
