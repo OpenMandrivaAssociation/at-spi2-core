@@ -82,7 +82,8 @@ files to allow you to develop with %{name}.
 %autosetup -p1
 %meson \
 
-%if %{with bootstrap}#	-Denable-introspection=no \
+%if %{with bootstrap}	
+	-Denable-introspection=no \
 %endif
 
 %if %{with gtkdoc}
