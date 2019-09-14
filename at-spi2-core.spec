@@ -85,7 +85,6 @@ files to allow you to develop with %{name}.
 %if %{with bootstrap}	
 	-Denable-introspection=no \
 %endif
-
 %if %{with gtkdoc}
 	-Denable_docs=true \
 %endif
