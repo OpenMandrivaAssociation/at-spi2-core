@@ -10,8 +10,8 @@
 
 Summary:	Protocol definitions and daemon for D-Bus at-spi
 Name:		at-spi2-core
-Version:	2.32.1
-Release:	2
+Version:	2.34.0
+Release:	1
 Epoch:		1
 Group:		System/Libraries
 License:	LGPLv2+
@@ -81,11 +81,9 @@ files to allow you to develop with %{name}.
 %prep
 %autosetup -p1
 %meson \
-
 %if %{with bootstrap}	
 	-Denable-introspection=no \
 %endif
-
 %if %{with gtkdoc}
 	-Denable_docs=true \
 %endif
