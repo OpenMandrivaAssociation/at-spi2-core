@@ -81,7 +81,6 @@ files to allow you to develop with %{name}.
 %prep
 %autosetup -p1
 %meson \
-
 %if %{with bootstrap}	
 	-Denable-introspection=no \
 %endif
