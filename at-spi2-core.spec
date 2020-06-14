@@ -1,3 +1,9 @@
+# at-spi2-core is used by at-spi2-atk, at-spi2-atk is used by gtk-3.0,
+# gtk-3.0 is used by wine
+%ifarch %{x86_64}
+%bcond_without compat32
+%endif
+
 %define url_ver	%(echo %{version}|cut -d. -f1,2)
 
 %define major	0
@@ -5,13 +11,15 @@
 %define libname	%mklibname atspi %{major}
 %define girname	%mklibname atspi-gir %{api}
 %define devname	%mklibname -d atspi
+%define lib32name	%mklib32name atspi %{major}
+%define dev32name	%mklib32name -d atspi
 %bcond_with	bootstrap
 %bcond_with	gtkdoc
 
 Summary:	Protocol definitions and daemon for D-Bus at-spi
 Name:		at-spi2-core
 Version:	2.36.0
-Release:	1
+Release:	2
 Epoch:		1
 Group:		System/Libraries
 License:	LGPLv2+
@@ -37,6 +45,22 @@ BuildRequires:	meson ninja
 BuildRequires:	gtk-doc
 %endif
 Requires:	dbus
+
+%if %{with compat32}
+BuildRequires:	devel(libdbus-1)
+BuildRequires:	devel(libgio-2.0)
+BuildRequires:	devel(libglib-2.0)
+BuildRequires:	devel(libgobject-2.0)
+BuildRequires:	devel(libz)
+BuildRequires:	devel(libbz2)
+BuildRequires:	devel(libmount)
+BuildRequires:	devel(libblkid)
+BuildRequires:	devel(libX11)
+BuildRequires:	devel(libXi)
+BuildRequires:	devel(libXtst)
+BuildRequires:	devel(libsystemd)
+BuildRequires:	devel(libxkbcommon)
+%endif
 
 %description
 at-spi allows assistive technologies to access GTK-based
@@ -78,8 +102,34 @@ Provides:	%{name}-devel = %{version}-%{release}
 This package provides the necessary development libraries and include 
 files to allow you to develop with %{name}.
 
+%if %{with compat32}
+%package -n %{lib32name}
+Summary:	Libraries for %{name} (32-bit)
+Group:		System/Libraries
+
+%description -n %{lib32name}
+This package contains libraries used by %{name}.
+
+%package -n %{dev32name}
+Summary:	Libraries and include files with %{name} (32-bit)
+Group:		Development/GNOME and GTK+
+Requires:	%{devname} = %{EVRD}
+Requires:	%{lib32name} = %{EVRD}
+
+%description -n %{dev32name}
+This package provides the necessary development libraries and include 
+files to allow you to develop with %{name}.
+%endif
+
 %prep
 %autosetup -p1
+%if %{with compat32}
+%meson32 \
+	-Denable-introspection=no \
+	-Denable_docs=false \
+	-Dsystemd_user_dir=%{_prefix}/lib/systemd/user
+%endif
+
 %meson \
 %if %{with bootstrap}	
 	-Denable-introspection=no \
@@ -90,9 +140,15 @@ files to allow you to develop with %{name}.
 	-Dsystemd_user_dir=%{_prefix}/lib/systemd/user
 
 %build
+%if %{with compat32}
+%ninja_build -C build32
+%endif
 %ninja -C build
 
 %install
+%if %{with compat32}
+%ninja_install -C build32
+%endif
 DESTDIR="%{buildroot}" %ninja install -C build
 
 %find_lang %{name}
@@ -124,4 +180,13 @@ DESTDIR="%{buildroot}" %ninja install -C build
 %{_includedir}/*
 %if !%{with bootstrap}
 %{_datadir}/gir-1.0/Atspi-%{api}.gir
+%endif
+
+%if %{with compat32}
+%files -n %{lib32name}
+%{_prefix}/lib/libatspi.so.%{major}*
+
+%files -n %{dev32name}
+%{_prefix}/lib/*.so
+%{_prefix}/lib/pkgconfig/*.pc
 %endif
