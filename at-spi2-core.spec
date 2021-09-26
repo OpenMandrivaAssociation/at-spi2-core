@@ -157,6 +157,7 @@ DESTDIR="%{buildroot}" %ninja install -C build
 %doc COPYING AUTHORS README
 %{_prefix}/lib/systemd/user/at-spi-dbus-bus.service
 %{_sysconfdir}/xdg/autostart/at-spi-dbus-bus.desktop
+%{_sysconfdir}/xdg/Xwayland-session.d/00-at-spi
 %{_libexecdir}/at-spi2-registryd
 %{_libexecdir}/at-spi-bus-launcher
 %{_datadir}/dbus-1/services/org.*.service
