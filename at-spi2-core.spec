@@ -18,7 +18,7 @@
 
 Summary:	Protocol definitions and daemon for D-Bus at-spi
 Name:		at-spi2-core
-Version:	2.42.0
+Version:	2.44.0
 Release:	1
 Epoch:		1
 Group:		System/Libraries
@@ -125,17 +125,17 @@ files to allow you to develop with %{name}.
 %autosetup -p1
 %if %{with compat32}
 %meson32 \
-	-Denable-introspection=no \
-	-Denable_docs=false \
+	-Dintrospection=no \
+	-Ddocs=false \
 	-Dsystemd_user_dir=%{_prefix}/lib/systemd/user
 %endif
 
 %meson \
 %if %{with bootstrap}	
-	-Denable-introspection=no \
+	-Dintrospection=no \
 %endif
 %if %{with gtkdoc}
-	-Denable_docs=true \
+	-Ddocs=true \
 %endif
 	-Dsystemd_user_dir=%{_prefix}/lib/systemd/user
 
