@@ -127,6 +127,7 @@ files to allow you to develop with %{name}.
 %meson32 \
 	-Dintrospection=no \
 	-Ddocs=false \
+	-Dx11=yes \
 	-Dsystemd_user_dir=%{_prefix}/lib/systemd/user
 %endif
 
@@ -137,7 +138,12 @@ files to allow you to develop with %{name}.
 %if %{with gtkdoc}
 	-Ddocs=true \
 %endif
+	-Dintrospection=yes \
+	-Dx11=yes \
 	-Dsystemd_user_dir=%{_prefix}/lib/systemd/user
+	
+# force use x11 even on compat32 because without it compilation failing with  error: use of undeclared identifier 'LockMask' if (modifiers & LockMask)
+# https://gitlab.gnome.org/GNOME/at-spi2-core/-/issues/51
 
 %build
 %if %{with compat32}
