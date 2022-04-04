@@ -47,6 +47,7 @@ BuildRequires:	gtk-doc
 Requires:	dbus
 
 %if %{with compat32}
+BuildRequires:	libx11_6
 BuildRequires:	devel(libdbus-1)
 BuildRequires:	devel(libgio-2.0)
 BuildRequires:	devel(libglib-2.0)
