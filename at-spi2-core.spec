@@ -26,6 +26,9 @@ License:	LGPLv2+
 Url:		http://www.linuxfoundation.org/en/AT-SPI_on_D-Bus
 Source0:	http://ftp.gnome.org/pub/GNOME/sources/at-spi2-core/%{url_ver}/%{name}-%{version}.tar.xz
 
+#Fix for 	https://gitlab.gnome.org/GNOME/at-spi2-core/-/issues/51
+Patch0:		https://gitlab.gnome.org/GNOME/at-spi2-core/-/commit/08036a4c4491eea57d7b713bb4440f541584204b.patch
+
 BuildRequires:	intltool
 BuildRequires:	dbus
 BuildRequires:	pkgconfig(dbus-1)
