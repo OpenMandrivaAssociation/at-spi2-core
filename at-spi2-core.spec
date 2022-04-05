@@ -18,13 +18,16 @@
 
 Summary:	Protocol definitions and daemon for D-Bus at-spi
 Name:		at-spi2-core
-Version:	2.42.0
+Version:	2.44.0
 Release:	1
 Epoch:		1
 Group:		System/Libraries
 License:	LGPLv2+
 Url:		http://www.linuxfoundation.org/en/AT-SPI_on_D-Bus
 Source0:	http://ftp.gnome.org/pub/GNOME/sources/at-spi2-core/%{url_ver}/%{name}-%{version}.tar.xz
+
+#Fix for 	https://gitlab.gnome.org/GNOME/at-spi2-core/-/issues/51
+Patch0:		https://gitlab.gnome.org/GNOME/at-spi2-core/-/commit/08036a4c4491eea57d7b713bb4440f541584204b.patch
 
 BuildRequires:	intltool
 BuildRequires:	dbus
@@ -125,19 +128,25 @@ files to allow you to develop with %{name}.
 %autosetup -p1
 %if %{with compat32}
 %meson32 \
-	-Denable-introspection=no \
-	-Denable_docs=false \
+	-Dintrospection=no \
+	-Ddocs=false \
+	-Dx11=yes \
 	-Dsystemd_user_dir=%{_prefix}/lib/systemd/user
 %endif
 
 %meson \
 %if %{with bootstrap}	
-	-Denable-introspection=no \
+	-Dintrospection=no \
 %endif
 %if %{with gtkdoc}
-	-Denable_docs=true \
+	-Ddocs=true \
 %endif
+	-Dintrospection=yes \
+	-Dx11=yes \
 	-Dsystemd_user_dir=%{_prefix}/lib/systemd/user
+	
+# force use x11 even on compat32 because without it compilation failing with  error: use of undeclared identifier 'LockMask' if (modifiers & LockMask)
+# https://gitlab.gnome.org/GNOME/at-spi2-core/-/issues/51
 
 %build
 %if %{with compat32}
@@ -154,7 +163,7 @@ DESTDIR="%{buildroot}" %ninja install -C build
 %find_lang %{name}
 
 %files -f %{name}.lang
-%doc COPYING AUTHORS README
+%doc COPYING AUTHORS README.md
 %{_prefix}/lib/systemd/user/at-spi-dbus-bus.service
 %{_sysconfdir}/xdg/autostart/at-spi-dbus-bus.desktop
 %{_sysconfdir}/xdg/Xwayland-session.d/00-at-spi
