@@ -128,7 +128,8 @@ files to allow you to develop with %{name}.
 	-Dintrospection=no \
 	-Ddocs=false \
 	-Dx11=yes \
-	-Dsystemd_user_dir=%{_prefix}/lib/systemd/user
+	-Dsystemd_user_dir=%{_prefix}/lib/systemd/user \
+	-Ddbus_daemon=/usr/bin/dbus-daemon
 %endif
 
 %meson \
@@ -140,7 +141,8 @@ files to allow you to develop with %{name}.
 %endif
 	-Dintrospection=yes \
 	-Dx11=yes \
-	-Dsystemd_user_dir=%{_prefix}/lib/systemd/user
+	-Dsystemd_user_dir=%{_prefix}/lib/systemd/user \
+	-Ddbus_daemon=/usr/bin/dbus-daemon
 	
 # force use x11 even on compat32 because without it compilation failing with  error: use of undeclared identifier 'LockMask' if (modifiers & LockMask)
 # https://gitlab.gnome.org/GNOME/at-spi2-core/-/issues/51
