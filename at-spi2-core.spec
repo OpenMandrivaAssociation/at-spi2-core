@@ -139,7 +139,7 @@ Group:		System/Libraries
 Requires:	%{libname} = %{version}-%{release}
 Conflicts:	%{name} < 2.6.2-5
 
-%description -n %{libname}
+%description -n %{libbridgename}
 This package contains the library for %{name}.
 
 %package -n %{devbridgename}
