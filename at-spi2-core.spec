@@ -166,7 +166,7 @@ DESTDIR="%{buildroot}" %ninja install -C build
 %find_lang %{name}
 
 %files -f %{name}.lang
-%doc COPYING AUTHORS README.md
+%doc COPYING README.md
 %{_prefix}/lib/systemd/user/at-spi-dbus-bus.service
 %{_sysconfdir}/xdg/autostart/at-spi-dbus-bus.desktop
 %{_sysconfdir}/xdg/Xwayland-session.d/00-at-spi
