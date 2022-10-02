@@ -13,6 +13,12 @@
 %define devname	%mklibname -d atspi
 %define lib32name	%mklib32name atspi %{major}
 %define dev32name	%mklib32name -d atspi
+
+%define	libbridgename	%mklibname atk-bridge %{api} %{major}
+%define	devbridgename	%mklibname atk-bridge -d
+%define	lib32bridgename	%mklib32name atk-bridge %{api} %{major}
+%define	dev32bridgename	%mklib32name atk-bridge -d
+
 %bcond_with	bootstrap
 %bcond_with	gtkdoc
 
@@ -125,6 +131,45 @@ This package provides the necessary development libraries and include
 files to allow you to develop with %{name}.
 %endif
 
+#-----------------------------------
+
+%package -n %{libbridgename}
+Summary:	Main library for %{name}
+Group:		System/Libraries
+Requires:	%{libname} = %{version}-%{release}
+Conflicts:	%{name} < 2.6.2-5
+
+%description -n %{libname}
+This package contains the library for %{name}.
+
+%package -n %{devbridgename}
+Summary:	A GTK+ module that bridges ATK to D-Bus at-spi
+Requires:	%{libname} = %{version}-%{release}
+Requires:	%{libbridgename} = %{version}-%{release}
+Provides:	atk-bridge-devel = %{version}-%{release}
+
+%description -n %{devbridgename}
+This package includes the development libraries and header files 
+for %{name}.
+
+%if %{with compat32}
+%package -n %{lib32bridgename}
+Summary:	Main library for %{name} (32-bit)
+Group:		System/Libraries
+
+%description -n %{lib32bridgename}
+This package contains the library for %{name}.
+
+%package -n %{dev32bridgename}
+Summary:	A GTK+ module that bridges ATK to D-Bus at-spi (32-bit)
+Requires:	%{devname} = %{version}-%{release}
+Requires:	%{lib32bridgename} = %{version}-%{release}
+
+%description -n %{dev32bridgename}
+This package includes the development libraries and header files 
+for %{name}.
+%endif
+
 %prep
 %autosetup -p1
 %if %{with compat32}
@@ -175,6 +220,11 @@ DESTDIR="%{buildroot}" %ninja install -C build
 %{_datadir}/dbus-1/services/org.*.service
 %{_datadir}/dbus-1/accessibility-services/org.*.service
 %{_datadir}/defaults/at-spi2
+#------at-spi2-atk
+%dir %{_libdir}/gtk-2.0
+%dir %{_libdir}/gtk-2.0/modules
+%{_libdir}/gtk-2.0/modules/libatk-bridge.so
+%{_libdir}/gnome-settings-daemon-3.0/gtk-modules/at-spi2-atk.desktop
 
 %files -n %{libname}
 %{_libdir}/libatspi.so.%{major}*
@@ -202,4 +252,24 @@ DESTDIR="%{buildroot}" %ninja install -C build
 %files -n %{dev32name}
 %{_prefix}/lib/*.so
 %{_prefix}/lib/pkgconfig/*.pc
+%endif
+
+#-------------------
+%files -n %{libbridgename}
+%{_libdir}/libatk-bridge-%{api}.so.%{major}*
+
+%files -n %{devbridgename}
+%{_includedir}/at-spi2-atk/%{api}/atk-bridge.h
+%{_libdir}/libatk-bridge-%{api}.so
+%{_libdir}/pkgconfig/atk-bridge-%{api}.pc
+
+%if %{with compat32}
+%files -n %{lib32bridgename}
+%{_prefix}/lib/libatk-bridge-%{api}.so.%{major}*
+%{_prefix}/lib/gtk-2.0/modules/libatk-bridge.so
+%{_prefix}/lib/gnome-settings-daemon-3.0/gtk-modules/at-spi2-atk.desktop
+
+%files -n %{dev32bridgename}
+%{_prefix}/lib/libatk-bridge-%{api}.so
+%{_prefix}/lib/pkgconfig/atk-bridge-%{api}.pc
 %endif
