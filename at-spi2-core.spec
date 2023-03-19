@@ -174,22 +174,22 @@ for %{name}.
 %autosetup -p1
 %if %{with compat32}
 %meson32 \
-	-Dintrospection=no \
+	-Dintrospection=enabled \
 	-Ddocs=false \
-	-Dx11=yes \
+	-Dx11=enabled \
 	-Dsystemd_user_dir=%{_prefix}/lib/systemd/user \
 	-Ddbus_daemon=/usr/bin/dbus-daemon
 %endif
 
 %meson \
 %if %{with bootstrap}	
-	-Dintrospection=no \
+	-Dintrospection=disabled \
 %endif
 %if %{with gtkdoc}
 	-Ddocs=true \
 %endif
-	-Dintrospection=yes \
-	-Dx11=yes \
+	-Dintrospection=enabled \
+	-Dx11=enabled \
 	-Dsystemd_user_dir=%{_prefix}/lib/systemd/user \
 	-Ddbus_daemon=/usr/bin/dbus-daemon
 	
