@@ -179,7 +179,7 @@ for %{name}.
 %autosetup -p1
 %if %{with compat32}
 %meson32 \
-	-Dintrospection=enabled \
+	-Dintrospection=disabled \
 	-Ddocs=false \
 	-Dx11=enabled \
 	-Dsystemd_user_dir=%{_prefix}/lib/systemd/user \
