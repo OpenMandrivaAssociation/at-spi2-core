@@ -72,6 +72,7 @@ BuildRequires:	devel(libxcb)
 BuildRequires:  devel(libXdmcp)
 BuildRequires:	devel(libXtst)
 BuildRequires:	devel(libsystemd)
+BuildRequires:  devel(libXfixes)
 BuildRequires:	devel(libxkbcommon)
 %endif
 
