@@ -8,6 +8,7 @@
 
 %define major	0
 %define api	2.0
+%define atkgmajor       1.0
 %define libname	%mklibname atspi %{major}
 %define girname	%mklibname atspi-gir %{api}
 %define devname	%mklibname -d atspi
