@@ -92,11 +92,11 @@ ORBIT / CORBA for its transport protocol.
 %package -n %{libname}
 Summary:	Libraries for %{name}
 Group:		System/Libraries
-Provides: %{lib}atk1.0_0 = %{EVRD}
-Provides: %{lib}atk-bridge2.0_0  = %{EVRD}
+Provides: %{_lib}atk1.0_0 = %{EVRD}
+Provides: %{_lib}atk-bridge2.0_0  = %{EVRD}
 
-Obsoletes: %{lib}atk1.0_0 < %{EVRD}
-Obsoletes: %{lib}atk-bridge2.0_0  < %{EVRD}
+Obsoletes: %{_lib}atk1.0_0 < %{EVRD}
+Obsoletes: %{_lib}atk-bridge2.0_0  < %{EVRD}
 
 %description -n %{libname}
 This package contains libraries used by %{name}.
@@ -106,9 +106,9 @@ This package contains libraries used by %{name}.
 Summary:	GObject Introspection interface description for %{name}
 Group:		System/Libraries
 Requires:	%{libname} = %{EVRD}
-Provides:  %{lib}atk-gir1.0 = %{EVRD}
+Provides:  %{_lib}atk-gir1.0 = %{EVRD}
 
-Obsoletes: %{lib}atk-gir1.0 < %{EVRD}
+Obsoletes: %{_lib}atk-gir1.0 < %{EVRD}
 
 %description -n %{girname}
 GObject Introspection interface description for %{name}.
@@ -122,11 +122,11 @@ Requires:	%{libname} = %{EVRD}
 Requires:	%{girname} = %{EVRD}
 %endif
 Provides:	%{name}-devel = %{version}-%{release}
-Provides: 	%{lib}atk1.0-devel = %{EVRD}
-Provides: 	%{lib}atk-bridge-devel = %{EVRD}
+Provides: 	%{_lib}atk1.0-devel = %{EVRD}
+Provides: 	%{_lib}atk-bridge-devel = %{EVRD}
 
-Obsoletes: 	%{lib}atk1.0-devel < %{EVRD}
-Obsoletes: 	%{lib}atk-bridge-devel < %{EVRD}
+Obsoletes: 	%{_lib}atk1.0-devel < %{EVRD}
+Obsoletes: 	%{_lib}atk-bridge-devel < %{EVRD}
 
 %description -n %{devname}
 This package provides the necessary development libraries and include 
