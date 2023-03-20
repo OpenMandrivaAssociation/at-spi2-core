@@ -248,11 +248,11 @@ DESTDIR="%{buildroot}" %ninja install -C build
 %{_prefix}/lib/gnome-settings-daemon-3.0/gtk-modules/at-spi2-atk.desktop
 %{_prefix}/lib/libatk-bridge-%{api}.so.%{major}*
 %{_prefix}/lib/gtk-2.0/modules/libatk-bridge.so
+%{_prefix}/lib/libatk-%{atkgmajor}.so.%{major}{,.*}
 
 %files -n %{dev32name}
 %{_prefix}/lib/*.so
 %{_prefix}/lib/pkgconfig/*.pc
-%{_prefix}/lib/libatk-bridge-%{api}.so
-%{_prefix}/lib/pkgconfig/atk-bridge-%{api}.pc
-%{_prefix}/lib/libatk-%{atkgmajor}.so.%{major}{,.*}	
+#{_prefix}/lib/libatk-bridge-%{api}.so
+%{_prefix}/lib/pkgconfig/atk-bridge-%{api}.pc	
 %endif
