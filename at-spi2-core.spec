@@ -241,7 +241,6 @@ DESTDIR="%{buildroot}" %ninja install -C build
 %{_datadir}/gir-1.0/Atspi-%{api}.gir
 %{_datadir}/gir-1.0/Atk-%{atkgmajor}.gir
 %endif
-%{_libdir}/libatk-%{atkgmajor}.so
 
 %if %{with compat32}
 %files -n %{lib32name}
