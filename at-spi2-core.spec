@@ -19,6 +19,13 @@
 %define	lib32bridgename	%mklib32name atk-bridge %{api} %{major}
 %define	dev32bridgename	%mklib32name atk-bridge -d
 
+%define atkgmajor       1.0
+%define atklib          %mklibname atk %{atkapi} %{major}
+%define atkgir          %mklibname atk-gir %{atkgmajor}
+%define atkdev          %mklibname atk %{atkapi} -d
+%define	lib32atk	%mklib32name atk %{atkapi} %{major}
+	 	 
+
 %bcond_with	bootstrap
 %bcond_with	gtkdoc
 
@@ -175,6 +182,43 @@ This package includes the development libraries and header files
 for %{name}.
 %endif
 
+%package -n %{atklib}
+Summary:        Libraries for Atk
+Group:          System/Libraries
+Requires:       %{name} >= %{version}-%{release}
+Requires:	%{libname} = %{version}-%{release}
+Obsoletes:      atk1.0-common < 2.46.0
+	 	 
+%description -n %{atklib}
+This package contains libraries used by Atk.
+
+%package -n %{atkdev}
+Summary:        Libraries and include files for Atk
+Group:          Development/GNOME and GTK+
+Requires:       %{atklib} = %{version}-%{release}
+Requires:       %{atkgir} = %{version}-%{release}
+Provides:       atk%{atkapi}-devel = %{version}-%{release}
+	 	 
+%description -n %{atkdev}
+This package provides the necessary development libraries and include files to allow you to develop with Atk.
+
+%package -n %{atkgir}
+Summary:        GObject Introspection interface description for Atk
+Group:          System/Libraries
+Requires:       %{atklib} = %{version}-%{release}
+
+%description -n %{atkgir}
+GObject Introspection interface description for Atk.
+
+%if %{with compat32}
+%package -n %{lib32atk}
+Summary:	This package contains libraries used by Atk. (32-bit)
+
+%description -n %{lib32atk}
+This package contains libraries used by Atk. (32-bit)
+%endif
+
+
 %prep
 %autosetup -p1
 %if %{with compat32}
@@ -246,6 +290,9 @@ DESTDIR="%{buildroot}" %ninja install -C build
 %{_libdir}/*.so
 %{_libdir}/pkgconfig/*.pc
 %{_includedir}/*
+%exclude %{_libdir}/libatk-%{atkapi}.so
+%exclude %{_libdir}/pkgconfig/atk.pc
+%exclude %{_includedir}/atk-1.0/
 %if !%{with bootstrap}
 %{_datadir}/gir-1.0/Atspi-%{api}.gir
 %endif
@@ -253,6 +300,7 @@ DESTDIR="%{buildroot}" %ninja install -C build
 %if %{with compat32}
 %files -n %{lib32name}
 %{_prefix}/lib/libatspi.so.%{major}*
+%{_prefix}/lib/gnome-settings-daemon-3.0/gtk-modules/at-spi2-atk.desktop
 
 %files -n %{dev32name}
 %{_prefix}/lib/*.so
@@ -272,9 +320,27 @@ DESTDIR="%{buildroot}" %ninja install -C build
 %files -n %{lib32bridgename}
 %{_prefix}/lib/libatk-bridge-%{api}.so.%{major}*
 %{_prefix}/lib/gtk-2.0/modules/libatk-bridge.so
-%{_prefix}/lib/gnome-settings-daemon-3.0/gtk-modules/at-spi2-atk.desktop
+
 
 %files -n %{dev32bridgename}
 %{_prefix}/lib/libatk-bridge-%{api}.so
 %{_prefix}/lib/pkgconfig/atk-bridge-%{api}.pc
+%endif
+
+#------------------- 
+%files -n %{atklib}
+%{_libdir}/libatk-%{atkapi}.so.%{major}{,.*}	
+
+%files -n %{atkgir}
+%{_libdir}/girepository-1.0/Atk-%{atkgmajor}.typelib
+
+%files -n %{atkdev}
+%{_libdir}/libatk-%{atkapi}.so
+%{_libdir}/pkgconfig/atk.pc
+%{_includedir}/atk-1.0/
+%{_datadir}/gir-1.0/Atk-%{atkgmajor}.gir
+
+%if %{with compat32}
+%files -n %{lib32atk}
+%{_prefix}/lib/libatk-%{atkapi}.so.%{major}{,.*}	
 %endif
