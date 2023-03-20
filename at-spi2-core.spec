@@ -20,10 +20,10 @@
 %define	dev32bridgename	%mklib32name atk-bridge -d
 
 %define atkgmajor       1.0
-%define atklib          %mklibname atk %{atkapi} %{major}
+%define atklib          %mklibname atk %{atkgmajor} %{major}
 %define atkgir          %mklibname atk-gir %{atkgmajor}
-%define atkdev          %mklibname atk %{atkapi} -d
-%define	lib32atk	%mklib32name atk %{atkapi} %{major}
+%define atkdev          %mklibname atk %{atkgmajor} -d
+%define	lib32atk	%mklib32name atk %{atkgmajor} %{major}
 	 	 
 
 %bcond_with	bootstrap
@@ -329,18 +329,18 @@ DESTDIR="%{buildroot}" %ninja install -C build
 
 #------------------- 
 %files -n %{atklib}
-%{_libdir}/libatk-%{atkapi}.so.%{major}{,.*}	
+%{_libdir}/libatk-%{atkgmajor}.so.%{major}{,.*}	
 
 %files -n %{atkgir}
 %{_libdir}/girepository-1.0/Atk-%{atkgmajor}.typelib
 
 %files -n %{atkdev}
-%{_libdir}/libatk-%{atkapi}.so
+%{_libdir}/libatk-%{atkgmajor}.so
 %{_libdir}/pkgconfig/atk.pc
 %{_includedir}/atk-1.0/
 %{_datadir}/gir-1.0/Atk-%{atkgmajor}.gir
 
 %if %{with compat32}
 %files -n %{lib32atk}
-%{_prefix}/lib/libatk-%{atkapi}.so.%{major}{,.*}	
+%{_prefix}/lib/libatk-%{atkgmajor}.so.%{major}{,.*}	
 %endif
