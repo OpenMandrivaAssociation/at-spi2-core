@@ -241,12 +241,7 @@ DESTDIR="%{buildroot}" %ninja install -C build
 %{_datadir}/gir-1.0/Atspi-%{api}.gir
 %{_datadir}/gir-1.0/Atk-%{atkgmajor}.gir
 %endif
-%{_includedir}/at-spi2-atk/%{api}/atk-bridge.h
-%{_libdir}/libatk-bridge-%{api}.so
-%{_libdir}/pkgconfig/atk-bridge-%{api}.pc
 %{_libdir}/libatk-%{atkgmajor}.so
-%{_libdir}/pkgconfig/atk.pc
-%{_includedir}/atk-1.0/
 
 %if %{with compat32}
 %files -n %{lib32name}
