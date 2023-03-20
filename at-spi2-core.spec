@@ -254,5 +254,5 @@ DESTDIR="%{buildroot}" %ninja install -C build
 %{_prefix}/lib/*.so
 %{_prefix}/lib/pkgconfig/*.pc
 #{_prefix}/lib/libatk-bridge-%{api}.so
-%{_prefix}/lib/pkgconfig/atk-bridge-%{api}.pc	
+#{_prefix}/lib/pkgconfig/atk-bridge-%{api}.pc	
 %endif
