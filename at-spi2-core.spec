@@ -14,18 +14,6 @@
 %define lib32name	%mklib32name atspi %{major}
 %define dev32name	%mklib32name -d atspi
 
-%define	libbridgename	%mklibname atk-bridge %{api} %{major}
-%define	devbridgename	%mklibname atk-bridge -d
-%define	lib32bridgename	%mklib32name atk-bridge %{api} %{major}
-%define	dev32bridgename	%mklib32name atk-bridge -d
-
-%define atkgmajor       1.0
-%define atklib          %mklibname atk %{atkgmajor} %{major}
-%define atkgir          %mklibname atk-gir %{atkgmajor}
-%define atkdev          %mklibname atk %{atkgmajor} -d
-%define	lib32atk	%mklib32name atk %{atkgmajor} %{major}
-	 	 
-
 %bcond_with	bootstrap
 %bcond_with	gtkdoc
 
@@ -84,6 +72,13 @@ BuildRequires:  devel(libXfixes)
 BuildRequires:	devel(libxkbcommon)
 %endif
 
+Provides: atk1.0-common = %{EVRD}
+Provides: at-spi2-atk = %{EVRD}
+
+Obsoletes: atk1.0-common < %{EVRD}
+Obsoletes: at-spi2-atk < %{EVRD}
+
+
 %description
 at-spi allows assistive technologies to access GTK-based
 applications. Essentially it exposes the internals of applications for
@@ -97,6 +92,11 @@ ORBIT / CORBA for its transport protocol.
 %package -n %{libname}
 Summary:	Libraries for %{name}
 Group:		System/Libraries
+Provides: %{lib}atk1.0_0 = %{EVRD}
+Provides: %{lib}atk-bridge2.0_0  = %{EVRD}
+
+Obsoletes: %{lib}atk1.0_0 < %{EVRD}
+Obsoletes: %{lib}atk-bridge2.0_0  < %{EVRD}
 
 %description -n %{libname}
 This package contains libraries used by %{name}.
@@ -106,6 +106,9 @@ This package contains libraries used by %{name}.
 Summary:	GObject Introspection interface description for %{name}
 Group:		System/Libraries
 Requires:	%{libname} = %{EVRD}
+Provides:  %{lib}atk-gir1.0 = %{EVRD}
+
+Obsoletes: %{lib}atk-gir1.0 < %{EVRD}
 
 %description -n %{girname}
 GObject Introspection interface description for %{name}.
@@ -119,6 +122,11 @@ Requires:	%{libname} = %{EVRD}
 Requires:	%{girname} = %{EVRD}
 %endif
 Provides:	%{name}-devel = %{version}-%{release}
+Provides: 	%{lib}atk1.0-devel = %{EVRD}
+Provides: 	%{lib}atk-bridge-devel = %{EVRD}
+
+Obsoletes: 	%{lib}atk1.0-devel < %{EVRD}
+Obsoletes: 	%{lib}atk-bridge-devel < %{EVRD}
 
 %description -n %{devname}
 This package provides the necessary development libraries and include 
@@ -128,6 +136,11 @@ files to allow you to develop with %{name}.
 %package -n %{lib32name}
 Summary:	Libraries for %{name} (32-bit)
 Group:		System/Libraries
+Provides: 	libatk1.0_0 = %{EVRD}
+Provides: 	libatk-bridge2.0_0 = %{EVRD}
+
+Obsoletes: 	libatk1.0_0 < %{EVRD}
+Obsoletes: 	libatk-bridge2.0_0 < %{EVRD}
 
 %description -n %{lib32name}
 This package contains libraries used by %{name}.
@@ -137,85 +150,15 @@ Summary:	Libraries and include files with %{name} (32-bit)
 Group:		Development/GNOME and GTK+
 Requires:	%{devname} = %{EVRD}
 Requires:	%{lib32name} = %{EVRD}
+Provides: 	libatk1.0-devel = %{EVRD}
+Provides: 	libatk-bridge-devel = %{EVRD}
+
+Obsoletes: 	libatk1.0-devel < %{EVRD}
+Obsoletes: 	libatk-bridge-devel < %{EVRD}
 
 %description -n %{dev32name}
 This package provides the necessary development libraries and include 
 files to allow you to develop with %{name}.
-%endif
-
-#-----------------------------------
-
-%package -n %{libbridgename}
-Summary:	Main library for %{name}
-Group:		System/Libraries
-Requires:	%{libname} = %{version}-%{release}
-Conflicts:	%{name} < 2.6.2-5
-
-%description -n %{libbridgename}
-This package contains the library for %{name}.
-
-%package -n %{devbridgename}
-Summary:	A GTK+ module that bridges ATK to D-Bus at-spi
-Requires:	%{libname} = %{version}-%{release}
-Requires:	%{libbridgename} = %{version}-%{release}
-Provides:	atk-bridge-devel = %{version}-%{release}
-
-%description -n %{devbridgename}
-This package includes the development libraries and header files 
-for %{name}.
-
-%if %{with compat32}
-%package -n %{lib32bridgename}
-Summary:	Main library for %{name} (32-bit)
-Group:		System/Libraries
-
-%description -n %{lib32bridgename}
-This package contains the library for %{name}.
-
-%package -n %{dev32bridgename}
-Summary:	A GTK+ module that bridges ATK to D-Bus at-spi (32-bit)
-Requires:	%{devname} = %{version}-%{release}
-Requires:	%{lib32bridgename} = %{version}-%{release}
-
-%description -n %{dev32bridgename}
-This package includes the development libraries and header files 
-for %{name}.
-%endif
-
-%package -n %{atklib}
-Summary:        Libraries for Atk
-Group:          System/Libraries
-Requires:       %{name} >= %{version}-%{release}
-Requires:	%{libname} = %{version}-%{release}
-Obsoletes:      atk1.0-common < 2.46.0
-	 	 
-%description -n %{atklib}
-This package contains libraries used by Atk.
-
-%package -n %{atkdev}
-Summary:        Libraries and include files for Atk
-Group:          Development/GNOME and GTK+
-Requires:       %{atklib} = %{version}-%{release}
-Requires:       %{atkgir} = %{version}-%{release}
-Provides:       atk%{atkapi}-devel = %{version}-%{release}
-	 	 
-%description -n %{atkdev}
-This package provides the necessary development libraries and include files to allow you to develop with Atk.
-
-%package -n %{atkgir}
-Summary:        GObject Introspection interface description for Atk
-Group:          System/Libraries
-Requires:       %{atklib} = %{version}-%{release}
-
-%description -n %{atkgir}
-GObject Introspection interface description for Atk.
-
-%if %{with compat32}
-%package -n %{lib32atk}
-Summary:	This package contains libraries used by Atk. (32-bit)
-
-%description -n %{lib32atk}
-This package contains libraries used by Atk. (32-bit)
 %endif
 
 
@@ -277,10 +220,13 @@ DESTDIR="%{buildroot}" %ninja install -C build
 
 %files -n %{libname}
 %{_libdir}/libatspi.so.%{major}*
+%{_libdir}/libatk-bridge-%{api}.so.%{major}*
+%{_libdir}/libatk-%{atkgmajor}.so.%{major}{,.*}	
 
 %if !%{with bootstrap}
 %files -n %{girname}
 %{_libdir}/girepository-1.0/Atspi-%{api}.typelib
+%{_libdir}/girepository-1.0/Atk-%{atkgmajor}.typelib
 %endif
 
 %files -n %{devname}
@@ -290,57 +236,28 @@ DESTDIR="%{buildroot}" %ninja install -C build
 %{_libdir}/*.so
 %{_libdir}/pkgconfig/*.pc
 %{_includedir}/*
-%exclude %{_libdir}/libatk-%{atkapi}.so
-%exclude %{_libdir}/pkgconfig/atk.pc
-%exclude %{_includedir}/atk-1.0/
 %if !%{with bootstrap}
 %{_datadir}/gir-1.0/Atspi-%{api}.gir
+%{_datadir}/gir-1.0/Atk-%{atkgmajor}.gir
 %endif
+%{_includedir}/at-spi2-atk/%{api}/atk-bridge.h
+%{_libdir}/libatk-bridge-%{api}.so
+%{_libdir}/pkgconfig/atk-bridge-%{api}.pc
+%{_libdir}/libatk-%{atkgmajor}.so
+%{_libdir}/pkgconfig/atk.pc
+%{_includedir}/atk-1.0/
 
 %if %{with compat32}
 %files -n %{lib32name}
 %{_prefix}/lib/libatspi.so.%{major}*
 %{_prefix}/lib/gnome-settings-daemon-3.0/gtk-modules/at-spi2-atk.desktop
+%{_prefix}/lib/libatk-bridge-%{api}.so.%{major}*
+%{_prefix}/lib/gtk-2.0/modules/libatk-bridge.so
 
 %files -n %{dev32name}
 %{_prefix}/lib/*.so
 %{_prefix}/lib/pkgconfig/*.pc
-%endif
-
-#-------------------
-%files -n %{libbridgename}
-%{_libdir}/libatk-bridge-%{api}.so.%{major}*
-
-%files -n %{devbridgename}
-%{_includedir}/at-spi2-atk/%{api}/atk-bridge.h
-%{_libdir}/libatk-bridge-%{api}.so
-%{_libdir}/pkgconfig/atk-bridge-%{api}.pc
-
-%if %{with compat32}
-%files -n %{lib32bridgename}
-%{_prefix}/lib/libatk-bridge-%{api}.so.%{major}*
-%{_prefix}/lib/gtk-2.0/modules/libatk-bridge.so
-
-
-%files -n %{dev32bridgename}
 %{_prefix}/lib/libatk-bridge-%{api}.so
 %{_prefix}/lib/pkgconfig/atk-bridge-%{api}.pc
-%endif
-
-#------------------- 
-%files -n %{atklib}
-%{_libdir}/libatk-%{atkgmajor}.so.%{major}{,.*}	
-
-%files -n %{atkgir}
-%{_libdir}/girepository-1.0/Atk-%{atkgmajor}.typelib
-
-%files -n %{atkdev}
-%{_libdir}/libatk-%{atkgmajor}.so
-%{_libdir}/pkgconfig/atk.pc
-%{_includedir}/atk-1.0/
-%{_datadir}/gir-1.0/Atk-%{atkgmajor}.gir
-
-%if %{with compat32}
-%files -n %{lib32atk}
 %{_prefix}/lib/libatk-%{atkgmajor}.so.%{major}{,.*}	
 %endif
