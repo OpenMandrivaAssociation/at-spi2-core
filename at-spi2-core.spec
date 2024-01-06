@@ -36,6 +36,7 @@ BuildRequires:	pkgconfig(glib-2.0)
 BuildRequires:	pkgconfig(gobject-2.0)
 BuildRequires:	pkgconfig(gobject-introspection-1.0)
 BuildRequires:	pkgconfig(libpcre2-8)
+BuildRequires:	pkgconfig(liblzma)
 BuildRequires:	pkgconfig(libxml-2.0)
 BuildRequires:	pkgconfig(x11)
 BuildRequires:	pkgconfig(xi)
@@ -71,6 +72,8 @@ BuildRequires:  devel(libXext)
 BuildRequires:	devel(libsystemd)
 BuildRequires:  devel(libXfixes)
 BuildRequires:	devel(libxkbcommon)
+BuildRequires:	devel(libxml2)
+BuildRequires:	devel(liblzma)
 %endif
 
 Provides: atk1.0-common = %{EVRD}
