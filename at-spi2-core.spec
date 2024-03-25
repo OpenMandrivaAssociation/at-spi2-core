@@ -20,13 +20,13 @@
 
 Summary:	Protocol definitions and daemon for D-Bus at-spi
 Name:		at-spi2-core
-Version:	2.50.1
+Version:	2.52.0
 Release:	1
 Epoch:		1
 Group:		System/Libraries
 License:	LGPLv2+
-Url:		http://www.linuxfoundation.org/en/AT-SPI_on_D-Bus
-Source0:	http://ftp.gnome.org/pub/GNOME/sources/at-spi2-core/%{url_ver}/%{name}-%{version}.tar.xz
+Url:		https://www.linuxfoundation.org/en/AT-SPI_on_D-Bus
+Source0:	https://ftp.gnome.org/pub/GNOME/sources/at-spi2-core/%{url_ver}/%{name}-%{version}.tar.xz
 
 BuildRequires:	intltool
 BuildRequires:	dbus
