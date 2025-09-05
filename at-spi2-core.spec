@@ -216,6 +216,8 @@ DESTDIR="%{buildroot}" %ninja install -C build
 %{_datadir}/dbus-1/services/org.*.service
 %{_datadir}/dbus-1/accessibility-services/org.*.service
 %{_datadir}/defaults/at-spi2
+%{python_sitearch}/gi/overrides/Atspi.py
+%{python_sitearch}/gi/overrides/__pycache__/Atspi.cpython-*.pyc
 #------at-spi2-atk
 %dir %{_libdir}/gtk-2.0
 %dir %{_libdir}/gtk-2.0/modules
