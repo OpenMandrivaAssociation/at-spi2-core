@@ -45,6 +45,7 @@ BuildRequires:	pkgconfig(xevie)
 BuildRequires:	pkgconfig(systemd)
 BuildRequires:	pkgconfig(xkbcommon-x11)
 BuildRequires:	meson ninja
+BuildRequires:	python-setuptools
 
 %if %{with gtkdoc}
 BuildRequires:	gtk-doc
