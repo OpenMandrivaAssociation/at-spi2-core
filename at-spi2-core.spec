@@ -20,7 +20,7 @@
 
 Summary:	Protocol definitions and daemon for D-Bus at-spi
 Name:		at-spi2-core
-Version:	2.60.4
+Version:	2.60.5
 Release:	1
 Epoch:		1
 Group:		System/Libraries
