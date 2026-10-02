@@ -20,7 +20,7 @@
 
 Summary:	Protocol definitions and daemon for D-Bus at-spi
 Name:		at-spi2-core
-Version:	2.60.6
+Version:	2.62.0.1
 Release:	1
 Epoch:		1
 Group:		System/Libraries
@@ -75,6 +75,11 @@ BuildRequires:  devel(libXfixes)
 BuildRequires:	devel(libxkbcommon)
 BuildRequires:	devel(libxml2)
 BuildRequires:	devel(liblzma)
+BuildRequires:	cross-i686-openmandriva-linux-gnu-binutils
+BuildRequires:	cross-i686-openmandriva-linux-gnu-libc
+BuildRequires:	cross-i686-openmandriva-linux-gnu-gcc
+BuildRequires:	cross-i686-openmandriva-linux-gnu-kernel-headers
+BuildRequires:	cross-i686-openmandriva-linux-gnu-clang
 %endif
 
 Provides: atk1.0-common = %{EVRD}
